@@ -115,14 +115,13 @@ def profileSettings(request):
         thirdFavoriteTVShow = request.POST["thirdFavoriteTVShow"]
         fourthFavoriteTVShow = request.POST["fourthFavoriteTVShow"]
         fifthFavoriteTVShow = request.POST["fifthFavoriteTVShow"]
-        userName = request.user
-        profile = Profile(interests=interests, userName=userName, firstFavoriteMovie=firstFavoriteMovie,
+        profile = Profile.objects.filter(userName = request.user)
+        profile.update(interests=interests, firstFavoriteMovie=firstFavoriteMovie,
                           secondFavoriteMovie=secondFavoriteMovie,
                           thirdFavoriteMovie=thirdFavoriteMovie, fourthFavoriteMovie=fourthFavoriteMovie,
                           fifthFavoriteMovie=fifthFavoriteMovie, firstFavoriteTVShow=firstFavoriteTVShow,
                           secondFavoriteTVShow=secondFavoriteTVShow, thirdFavoriteTVShow=thirdFavoriteTVShow,
                           fourthFavoriteTVShow=fourthFavoriteTVShow, fifthFavoriteTVShow=fifthFavoriteTVShow)
-        profile.save()
         return HttpResponseRedirect(reverse('watchingparty:profile'))
 
     return render(request, 'profileSettingsDetail.html', {})
@@ -156,7 +155,6 @@ def planMovie(request):
         # return HttpResponseRedirect('index') # goto main page so user sees new addition
 
     return render(request, 'PlanMovie.html', {})
-
 
 def movieInfo(request, movietitle, description):
     movie = Event.objects.filter(mediaTitle=movietitle).filter(description=description).last()

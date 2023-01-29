@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block content %}
+<!--
+REFERENCES
+Title: <Javascript component>
+Author: <Trevor Eyre>
+URL: <https://autocomplete.trevoreyre.com/#/javascript-component?id=styling-and-customization>
+ -->
+<form action="{% url 'watchingparty:planMovie' %}" method="post" class="mx-auto col-auto" style="height:100%;">
+{% csrf_token %}
+<div style = "margin-top:5%; width: 70%;" class="mx-auto">
+    <h2>Create a new event!</h2>
+    <div class="mb-3 col-auto">
+        <label for="mediaTitle" class="form-label">What you're watching:</label>
+        <input type="text" id="mediaTitle" name="mediaTitle" class="form-control" required>
+    </div>
+    <div class="mb-3 form-group">
+    <label for="exampleFormControlSelect1">Select your Platform: </label>
+    <select class="form-select" name="platform" id="exampleFormControlSelect1" required>
+      <option value="disneyplus.jpg">Disney Plus</option>
+      <option value="hbo-max.png">HBO Max</option>
+      <option value="hulu.jpeg">Hulu</option>
+      <option value="netflix.jpeg">Netflix</option>
+      <option value="prime.jpeg">Amazon Prime</option>
+      <option value="movieStock.jpeg">Theater/Other (In-Person)</option>
+    </select>
+  </div>
+    <div class="mb-3 col-auto">
+       <label for="eventDate" class="form-label">Event Date:</label>
+        <input type="date" id="eventDate" name="eventDate" class="form-control" required>
+    </div>
+    <div class="mb-3 col-auto">
+        <label for="description" class="form-label">Description:</label>
+        <textarea id="description" name="description" class="form-control" required></textarea>
+    </div>
+    <div class="mb-3 col-auto">
+        <label for="address" class="form-label">Movie Theater Address (In the Format: House Number Street Name, City, State) (If Online: Type N/A into the box):</label>
+        <div id="autocomplete" class="autocomplete">
+            <input class="autocomplete-input"  id="address" name="address" placeholder="Search for an address" aria-label="Search for an address">
+            <ul class="autocomplete-result-list"></ul>
+        </div>
+    </div>
+    <div class="mb-3 col-auto">
+  <button type="submit" class="btn btn-primary">Create Event</button>
+</div>
+</div>
+</form>
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/@trevoreyre/autocomplete-js/dist/style.css"
+/>
+  <script src="https://unpkg.com/@trevoreyre/autocomplete-js"></script>
+
+        <script>
+            new Autocomplete('#autocomplete', {
+            search: input => {
+            const url = `https://api.geoapify.com/v1/geocode/autocomplete?text=${input}&apiKey=
+7c602e0cd2f54cba9b2c5c5897561a91`
+            return new Promise(resolve =>{
+                fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    const arr = [];
+                    Array.from(data.features).forEach(feature => {
+                        arr.push(feature.properties.formatted)
+                    })
+                    resolve(arr)
+                })
+            })
+            }
+        })
+        </script>
+{% endblock %}

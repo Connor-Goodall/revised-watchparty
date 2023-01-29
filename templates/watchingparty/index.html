@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% csrf_token %}
+<!-- Header and Bootstrap Importation-->
+{% block header %}
+
+<head>
+  <H1 class="d-flex justify-content-center" style="font-size: 100px; color:white; text-shadow: 4px 0 0 black, -4px 0 0 black, 0 4px 0 black, 0 -4px 0 black, 2px 2px black, -2px -2px 0 black, 2px -2px 0 black, -2px 2px 0 black;">Watch Party</H1>
+  <p class="d-flex justify-content-center" style="margin-bottom: 5%; font-size: 30px; color:white; text-shadow: 2px 0 0 black, -2px 0 0 black, 0 2px 0 black, 0 -2px 0 black, 1px 1px black, -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black;"> from
+    B-19 </p>
+  <title>Watch Party</title>
+</head>
+{% endblock %}
+<!-- Body of the Homepage-->
+{% block content %}
+{% if user.is_authenticated %}
+{% csrf_token %}
+
+<body>
+  <div class="container">
+
+    <div class="row">
+      {% for card in events %}
+      <div class="col-sm-3 mb-3">
+        <div class="card" style="width: 18rem;">
+          <img src="static/watchingparty/images/{{card.platform}}" onerror="this.src='static/watchingparty/images/movieStock.jpeg'" width="50" height="300" class="card-img-top">
+
+          <div class="card-body text-center">
+            <h5 class="card-title">{{ card.mediaTitle }}</h5>
+            <p><u> Creator:</u> {{ card.username }}</p>
+            <p><u> Date & Time:</u> {{ card.eventDate }} </p>
+            <p class="card-text"> {{ card.description }}</p>
+            <p><u> Attendees:</u>
+              {% if card.participant.all.count == 0 %}
+              No Attendees Yet!
+              {% endif %}
+              {% for person in card.participant.all %}
+              {% if forloop.last %}
+              {{person.userName}}
+              {% else %}
+              {{person.userName}},
+              {% endif %}
+              {% endfor %}
+            </p>
+            <form action="profile/" method="post"> {% csrf_token %}
+              <input type="hidden" value="{{ card.mediaTitle }}" name="eventName">
+              <button type="submit" class="btn btn-primary"> Watch with me!</button>
+            </form>
+            <a href="/{{card.mediaTitle}}/{{card.description}}" class="btn btn-primary" style="margin-top: 5px;">More Information!</a>
+          </div>
+
+        </div>
+      </div>
+      {% endfor %}
+
+    </div>
+  </div>
+
+</body>
+{% else %}
+<p class="d-flex justify-content-center" style="margin-bottom: 5%; font-size: 30px; color:white; text-shadow: 2px 0 0 black, -2px 0 0 black, 0 2px 0 black, 0 -2px 0 black, 1px 1px black, -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black;"> Please
+  Login Above In Order to See All of the Current Movie Events We Have. </p>
+{% endif %}
+{% endblock %}

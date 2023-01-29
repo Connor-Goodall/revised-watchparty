@@ -1,0 +1,33 @@
+li a {
+    color: red;
+}
+.circular_img {
+  border-radius: 50%;
+  width: 50px
+}
+.big_circular_img {
+  border-radius: 50%;
+  position: relative;
+  margin-top: 10px;
+  text-align: center;
+  width: 15vw;
+  height: 20vh;
+}
+.username_text{
+  text-align: center;
+  font-size: 50px;
+  vertical-align: middle;
+  margin-left:-25px;
+  font-weight: bold;
+}
+.profile_text{
+    line-height: 2.0;
+   font-weight: bold;
+   font-size: 20px;
+}
+.line_text{
+    line-height: 1.5;
+    font-size = 5px;
+    font-weight: bold;
+    list-style-position: inside;
+}

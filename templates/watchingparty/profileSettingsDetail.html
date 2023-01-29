@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block header %}
+
+<!-- Header of Profile Settings -->
+<div class="container-fluid justify-content-center text-center">
+<img class="big_circular_img" src="{{ user.socialaccount_set.all.0.get_avatar_url }}" />
+<h2 class="username_text"> <u> {{user.username}}'s Settings </u> </h2>
+{% endblock %}
+
+<!-- Body of Profile Settings -->
+{% block content %}
+    <form action="{% url 'watchingparty:save' %}" name="settingsText" method="post" class="mx-auto col-auto">
+     {% csrf_token %}
+        <p class="profile_text"> Interested in:</p>
+        <textarea id="settingsText" name="interests" class="text" cols="120" rows="6" placeholder="Adventure, Thrillers, Sports, etc." required></textarea>
+         <ul class="profile_text" style ="list-style-position: inside;"> Top 5 Favorite Movies:
+     <div class="mb-3 col-auto">
+        <label for="firstFavoriteMovie" class="form-label">1.</label>
+        <input type="text" id="firstFavoriteMovie" name="firstFavoriteMovie" placeholder="Movie 1" required>
+    </div>
+      <div class="mb-3 col-auto">
+        <label for="secondFavoriteMovie" class="form-label">2.</label>
+        <input type="text" id="secondFavoriteMovie" name="secondFavoriteMovie" placeholder="Movie 2" required>
+    </div>
+     <div class="mb-3 col-auto">
+        <label for="thirdFavoriteMovie" class="form-label">3.</label>
+        <input type="text" id="thirdFavoriteMovie" name="thirdFavoriteMovie" placeholder="Movie 3" required>
+    </div>
+     <div class="mb-3 col-auto">
+        <label for="fourthFavoriteMovie" class="form-label">4.</label>
+        <input type="text" id="fourthFavoriteMovie" name="fourthFavoriteMovie" placeholder="Movie 4" required>
+    </div>
+     <div class="mb-3 col-auto">
+        <label for="fifthFavoriteMovie" class="form-label">5.</label>
+        <input type="text" id="fifthFavoriteMovie" name="fifthFavoriteMovie" placeholder="Movie 5" required>
+    </div>
+              </ul>
+     <ul class="profile_text" style ="list-style-position: inside;"> Top 5 Favorite TV Shows:
+        <div class="mb-3 col-auto">
+            <label for="firstFavoriteTVShow" class="form-label">1.</label>
+            <input type="text" id="firstFavoriteTVShow" name="firstFavoriteTVShow" placeholder="Show 1" required>
+        </div>
+          <div class="mb-3 col-auto">
+            <label for="secondFavoriteTVShow" class="form-label">2.</label>
+            <input type="text" id="secondFavoriteTVShow" name="secondFavoriteTVShow" placeholder="Show 2" required>
+        </div>
+         <div class="mb-3 col-auto">
+            <label for="thirdFavoriteTVShow" class="form-label">3.</label>
+            <input type="text" id="thirdFavoriteTVShow" name="thirdFavoriteTVShow" placeholder="Show 3" required>
+        </div>
+         <div class="mb-3 col-auto">
+            <label for="fourthFavoriteTVShow" class="form-label">4.</label>
+            <input type="text" id="fourthFavoriteTVShow" name="fourthFavoriteTVShow" placeholder="Show 4" required>
+        </div>
+         <div class="mb-3 col-auto">
+            <label for="fifthFavoriteTVShow" class="form-label">5.</label>
+            <input type="text" id="fifthFavoriteTVShow" name="fifthFavoriteTVShow" placeholder="Show 5" required>
+        </div>
+         </ul>
+        <button type="submit" value="profileDetail" class="btn btn-primary">Save Changes?</button>
+ </form>
+</div>
+{% endblock %}
